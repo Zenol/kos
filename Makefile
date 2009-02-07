@@ -5,7 +5,7 @@
 ## Login   <cochoy_j@epitech.net>
 ## 
 ## Started on  Sat Dec 20 18:11:32 2008 jeremy cochoy
-## Last update Thu Jan 15 03:00:52 2009 jeremy cochoy
+## Last update Fri Feb  6 07:04:25 2009 jeremy cochoy
 ##
 
 LIBSRC	=	print.c		\
@@ -18,24 +18,29 @@ LIBSRC	=	print.c		\
 		tty.c		\
 		ksleep.c	\
 		color.c		\
+		gdt.c		\
 
 
 LIBOBJ	=	$(LIBSRC:.c=.o)
 
-floppy:
+floppy:	kern.c kern_init.c
 	nasm -f bin mbr.asm -o mbr.bin
+	gcc -c kern_init.c -o kern_init.o
 	gcc -c kern.c -o kern.o
-	ld --oformat binary -Ttext 1000 kern.o $(LIBOBJ) -o kern.bin
+	ld --oformat binary -Ttext 1000 kern.o kern_init.o $(LIBOBJ) -o kern.bin
 	cat mbr.bin kern.bin /dev/zero | dd of=floppy bs=512 count=2880
 
 .c.o:
 	gcc -Wall -c $< -o $@
 
-lib:	$(LIBOBJ)
+.lib:	$(LIBOBJ)
+	@echo 'done' > .lib
+
+lib:	.lib
 
 clean:
 	rm -f mbr.bin kern.bin floppy
 
 re:	clean floppy
 
-.PHONY:	clean re
+.PHONY:	clean re lib

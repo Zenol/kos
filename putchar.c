@@ -5,7 +5,7 @@
 ** Login   <cochoy_j@epitech.net>
 ** 
 ** Started on  Sun Dec 21 00:51:50 2008 jeremy cochoy
-** Last update Tue Dec 23 18:34:06 2008 jeremy cochoy
+** Last update Tue Feb  3 02:23:33 2009 jeremy cochoy
 */
 
 #include "klib.h"
@@ -17,6 +17,12 @@ int	putchar(char c)
     case '\n':
       tty_x = 0;
       tty_y++;
+      break;
+    case '\t':
+      putchar(' ');
+      putchar(' ');
+      putchar(' ');
+      putchar(' ');
       break;
     case '\r':
       tty_x = 0;

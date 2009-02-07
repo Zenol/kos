@@ -1,22 +1,14 @@
-#include <unistd.h>
-#include "types.h"
+/*
+** gdt.c for kos in /work/kos
+** 
+** Made by jeremy cochoy
+** Login   <cochoy_j@epitech.net>
+** 
+** Started on  Tue Feb  3 02:08:52 2009 jeremy cochoy
+** Last update Fri Feb  6 06:55:35 2009 jeremy cochoy
+*/
 
-typedef struct			s_gdt_seg
-{
-  u16		lim_0to15;
-  u16		base_0to15;
-  u8		base_16to23;
-  u8		acces;
-  u8		lim_16to19 : 4;
-  u8		other : 4;
-  u8		base_24to31;
-} __attribute__ ((packed))	t_gdt_seg;
-
-typedef struct	s_gdt_reg
-{
-  u16		limit;
-  t_gdt_seg	*base;
-}		t_gdt_reg;
+#include "gdt.h"
 
 t_gdt_reg	gdt_reg = {0, 0};
 t_gdt_seg	*kgdt = (t_gdt_seg*)0x00;
@@ -51,11 +43,6 @@ void	pushGdtSeg(u32 base, u32 limit, u8 acces, u8 other)
   gdt_reg.limit = 8 * kgdt_idx;
 }
 
-void	kinit(void)
-{
-  pushGdtSeg(0, 0, 0, 0);
-}
-
 void	popGdt(u32 *base, u32 *limit, u8 *acces, u8 *other)
 {
   getGdtSeg(&kgdt[kgdt_idx], base, limit, acces, other);
@@ -63,22 +50,20 @@ void	popGdt(u32 *base, u32 *limit, u8 *acces, u8 *other)
   gdt_reg.limit = 8 * kgdt_idx;
 }
 
-int	main(void)
+void	refreshGdt(void)
 {
-  t_gdt_seg	seg;
+  gdt_reg.limit = sizeof(t_gdt_seg) * kgdt_idx;
+  gdt_reg.base = kgdt;
 
-  setGdtSeg(&seg, 0x0, 0x0FFFF, 0x9B, 0x0);
+  /* reload GDT */
+  asm("lgdt (gdt_reg)");
 
-  write(1, &seg, sizeof(t_gdt_seg));
-
-  int base;
-  int limit;
-  char acces;
-  short int other;
-
-  getGdtSeg(&seg, &base, &limit, &acces, &other);
-
-  printf("%x, %x, %x, %x", base, limit, (int)acces, other);
-
-  return (0);
+  /* change registers */
+  asm("movw $0x10, %ax   \n \
+       movw %ax, %ds     \n \
+       movw %ax, %es     \n \
+       movw %ax, %fs     \n \
+       movw %ax, %gs     \n \
+       ljmp $0x08, $next \n \
+       next:             \n");
 }
