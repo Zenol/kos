@@ -5,8 +5,10 @@
 ** Login   <cochoy_j@epitech.net>
 ** 
 ** Started on  Sun Dec 21 00:06:12 2008 jeremy cochoy
-** Last update Tue Dec 23 18:29:58 2008 jeremy cochoy
+** Last update Mon Apr 20 00:13:59 2009 jeremy cochoy
 */
+
+#include "klib.h"
 
 int	print(char *str)
 {

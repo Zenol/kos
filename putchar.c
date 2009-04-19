@@ -5,12 +5,12 @@
 ** Login   <cochoy_j@epitech.net>
 ** 
 ** Started on  Sun Dec 21 00:51:50 2008 jeremy cochoy
-** Last update Tue Feb  3 02:23:33 2009 jeremy cochoy
+** Last update Sun Apr 19 21:55:59 2009 jeremy cochoy
 */
 
 #include "klib.h"
 
-int	putchar(char c)
+int	putchar(int c)
 {
   switch (c)
     {
@@ -39,5 +39,5 @@ int	putchar(char c)
     }
   if (tty_y >= 25)
     scroll(3);
-  return (1);
+  return (c);
 }

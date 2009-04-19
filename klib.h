@@ -5,7 +5,7 @@
 ** Login   <cochoy_j@epitech.net>
 ** 
 ** Started on  Sat Dec 20 22:35:27 2008 jeremy cochoy
-** Last update Thu Jan 15 03:04:41 2009 jeremy cochoy
+** Last update Sun Apr 19 21:55:54 2009 jeremy cochoy
 */
 
 #ifndef KLIB_H_
@@ -21,15 +21,16 @@
 #  define	FALSE	0
 # endif /* !FALSE */
 
-extern int	print(char *str);
-extern int	putstr(char *str);
-extern int	putchar(char c);
-extern int	putnbr(int n);
-extern void	scroll(int l);
-extern void	ksleep(unsigned int t);
+int	print(char *str);
+int	putstr(char *str);
+int	putchar(int c);
+int	putnbr(int n);
+void	scroll(int l);
+void	clear(void);
+void	ksleep(unsigned int t);
 
-void	memcpy(void *src, void *dst, int len);
-void	memset(void *ptr, int len, char c);
+void	*memcpy(void *dst, void *src, int len);
+void	*memset(void *ptr, int c, int len);
 
 #include "klib_sys.h"
 #include "color.h"

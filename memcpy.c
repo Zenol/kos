@@ -5,16 +5,24 @@
 ** Login   <cochoy_j@epitech.net>
 ** 
 ** Started on  Tue Dec 23 17:59:55 2008 jeremy cochoy
-** Last update Thu Jan 15 03:45:27 2009 jeremy cochoy
+** Last update Sun Apr 19 21:55:00 2009 jeremy cochoy
 */
 
-void	memcpy(char *src, char *dst, int len)
+#include "klib.h"
+
+void	*memcpy(void *dst, void *src, int len)
 {
+  char	*dst_c;
+  char	*src_c;
+
+  dst_c = dst;
+  src_c = src;
   while (len)
     {
-      *src = *dst;
-      src++;
-      dst++;
+      *src_c = *dst_c;
+      dst_c++;
+      src_c++;
       len--;
     }
+  return (dst);
 }

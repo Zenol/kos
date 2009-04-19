@@ -5,17 +5,20 @@
 ** Login   <cochoy_j@epitech.net>
 ** 
 ** Started on  Tue Dec 23 17:19:08 2008 jeremy cochoy
-** Last update Thu Jan 15 03:45:42 2009 jeremy cochoy
+** Last update Sun Apr 19 21:50:28 2009 jeremy cochoy
 */
 
-void	memset(char *ptr, int len, char c)
+#include "klib.h"
+
+void	*memset(void *ptr, int c, int len)
 {
   int	pos;
 
   pos = 0;
   while (pos < len)
     {
-      ptr[pos] = c;
+      ((char*)ptr)[pos] = (char)c;
       pos++;
     }
+  return (ptr);
 }
